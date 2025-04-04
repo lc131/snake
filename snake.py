@@ -4,6 +4,7 @@ import pygame
 import math
 from tkinter import messagebox
 import tkinter as tk
+import sys
 
 WIDTH = 500
 HEIGHT = 500
@@ -55,22 +56,26 @@ class Snake(object):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
+                sys.exit()
             keys = pygame.key.get_pressed() # Passing dictionary of key provided by pygame
             
+            # Careful prevent the snake from moving opposite direction of its current movement
+            # condition to change dirnx, dirny with checking
+            # Snake can not reverse direction directly
             for key in keys:
-                if keys[pygame.K_LEFT]:
+                if keys[pygame.K_LEFT] and self.dirnx != 1: #Make sure it not moving right
                     self.dirnx = -1 #Moving to left according to (x,y)
                     self.dirny = 0
                     self.turns[self.head.pos[:]] = [self.dirnx, self.dirny] # Set pos head according to (x,y) coordinate with dict syntax
-                elif keys[pygame.K_RIGHT]:
+                elif keys[pygame.K_RIGHT] and self.dirnx != -1:  # Not moving left
                     self.dirnx = 1 #Moving to left according to (x,y)
                     self.dirny = 0
                     self.turns[self.head.pos[:]] = [self.dirnx, self.dirny] # Set pos head according to (x,y) coordinate with dict syntax
-                elif keys[pygame.K_UP]:
+                elif keys[pygame.K_UP] and self.dirny != 1:  # Not moving down
                     self.dirnx = 0 #Moving to left according to (x,y)
                     self.dirny = -1
                     self.turns[self.head.pos[:]] = [self.dirnx, self.dirny] # Set pos head according to (x,y) coordinate with dict syntax
-                elif keys[pygame.K_DOWN]:
+                elif keys[pygame.K_DOWN] and self.dirny != -1:  # Not moving up
                     self.dirnx = 0 #Moving to left according to (x,y)
                     self.dirny = 1
                     self.turns[self.head.pos[:]] = [self.dirnx, self.dirny] # Set pos head according to (x,y) coordinate with dict syntax
@@ -124,6 +129,7 @@ class Snake(object):
             else:
                 c.draw(surface)
     
+    
 def redrawWindow(surface):
     global WIDTH, HEIGHT, row, s, snack
     # fill the screen with a color to wipe away anything from last frame
@@ -132,6 +138,7 @@ def redrawWindow(surface):
     snack.draw(surface)
     drawGrid(WIDTH, row, surface)
     pygame.display.update()
+
 
 def drawGrid(w, row, surface):
     sizeBtwn = w // row
@@ -157,7 +164,7 @@ def randomSnack(row, item):
             break
     return (x,y)
 
-def message_box(subject, content):
+def message_box(subject, content): # TK message box overlay
     root = tk.Tk()
     root.attributes("-topmost", True)
     root.withdraw()
@@ -166,6 +173,7 @@ def message_box(subject, content):
         root.destroy()
     except:
         pass
+
 def main():
     global WIDTH, HEIGHT, s, snack
     
@@ -177,11 +185,14 @@ def main():
     snack = Cube(randomSnack(row, s), color = (0,255,0))
     clock = pygame.time.Clock()
     running = True
-
+    dt = pygame.time.Clock.get_time(clock) / 1000
     while running:
         # poll for events
         pygame.time.delay(70)
-        clock.tick(20)  # limits FPS to 60
+        #delta time for movement
+        clock.tick(60)  # limits FPS to 60
+        #print(dt/1000) #check fps
+        #print(f"fps: {pygame.time.Clock.get_fps(clock)}")
         # pygame.QUIT event means the user clicked X to close your window
         s.move()
         if s.body[0].pos == snack.pos:
