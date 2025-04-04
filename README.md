@@ -82,4 +82,4 @@ Refactor:
 Modularize the code further by separating classes and game logic into multiple files for improved maintainability.
 
 License
-This project is open-source and available under the MIT License. See the LICENSE file for details.
+This project is open-source and available under the MIT License.
