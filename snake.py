@@ -27,8 +27,11 @@ class Cube(object):
         dis = self.w // self.row
         i = self.pos[0]
         j = self.pos[1]
-
-        pygame.draw.rect(surface, self.color, (i*dis+1, j*dis+1, dis - 2, dis - 2))
+        
+        #Create rectangle for segment
+        pygame.draw.rect(surface, self.color, (i*dis+1, j*dis+1, dis - 2, dis - 2), 0, 7) 
+        # rect (surface, color, rect, width, border radius) 
+        # 0 for filling color in rectangle, 7 represent border radius of rectangle
         if eyes:
             centre = dis // 2
             radius = 3
