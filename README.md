@@ -13,6 +13,7 @@ Implements modular arithmetic to correctly handle edge cases, ensuring that the 
 
 User Input:
 Arrow key controls allow for responsive direction changes without allowing direct reversal.
+Spacebar to pause and esc to get menu
 
 Simple UI and Scoring:
 Basic score tracking by counting the snake's length and a message box popup when the snake collides with itself.
