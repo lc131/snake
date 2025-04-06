@@ -29,10 +29,6 @@ You can install Pygame using pip:
 pip install pygame
 Tkinter is usually included with Python on most platforms. If it isn’t available, refer to your system’s documentation for installation instructions.
 
-Installation
-Clone the Repository:
-git clone https://github.com/yourusername/snake.git
-cd snake
 Install Dependencies:
 
 Make sure you have Python installed. Then, install the required packages (if not already installed):
