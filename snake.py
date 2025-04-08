@@ -177,28 +177,24 @@ class Snake:
         
         # Determine new segment position based on tail direction
         # (Place it behind the tail)
-        if dx == 1 and dy == 0:
-            new_pos = (tail.pos[0] - 1, tail.pos[1])
-        elif dx == -1 and dy == 0:
-            new_pos = (tail.pos[0] + 1, tail.pos[1])
-        elif dx == 0 and dy == 1:
-            new_pos = (tail.pos[0], tail.pos[1] - 1)
-        elif dx == 0 and dy == -1:
-            new_pos = (tail.pos[0], tail.pos[1] + 1)
-        else:
-            # Default case (shouldn't happen but just in case)
-            new_pos = (tail.pos[0], tail.pos[1])
+        # Calculate the position opposite to the tail's current direction
+        # This places the new segment directly behind the tail, as if the
+        # tail was there one step ago
+        new_pos = (
+            (tail.pos[0] - dx) % myconstants.GRID_SIZE,
+            (tail.pos[1] - dy) % myconstants.GRID_SIZE
+        )
         
         # Create the new segment
         new_cube = Cube(new_pos)
         
-        # Set visual position to match logical position
-        new_cube.visual_x = new_pos[0]
-        new_cube.visual_y = new_pos[1]
-        
         # Set direction to match tail direction
         new_cube.dirnx = dx
         new_cube.dirny = dy
+        
+        # Set visual position to match logical position
+        new_cube.visual_x = float(new_pos[0])
+        new_cube.visual_y = float(new_pos[1])
         
         # Add the new segment to the snake
         self.body.append(new_cube)
