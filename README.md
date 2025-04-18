@@ -49,34 +49,12 @@ Collect the green snacks that appear on the grid. Each time you collect a snack,
 Game Over:
 If the snake collides with itself, a message box will appear showing your score, and the game will reset.
 
-Code Structure
-main.py:
-Contains the main game loop, initializes the game, handles user input, updates game state, and renders the snake and grid.
-
-Cube Class:
-Represents a segment of the snake (and the snack) with logic for smooth movement and visual interpolation.
-
-Snake Class:
-Manages the snake’s body, direction, and logic for movement, growing, and wrapping around the screen.
-
-Utility Functions:
-Helper functions such as redrawWindow, drawGrid, and randomSnack handle rendering and game logic.
-
 Personal Notes
 This project was created as a personal learning exercise to improve my Python and Pygame skills. It helped me understand key game development concepts such as frame-independent movement, interpolation for smoother animations, and handling edge cases with grid-based logic.
 
 Future Improvements
 Enhanced Graphics:
 Improve the visual appearance with additional animations and effects.
-
-Scoring System:
-Implement a high-score tracking system and more detailed scoring.
-
-Sound Effects:
-Add sound effects for actions like collecting snacks and game over events.
-
-Refactor:
-Modularize the code further by separating classes and game logic into multiple files for improved maintainability.
 
 License
 This project is open-source and available under the MIT License.
