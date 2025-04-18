@@ -7,7 +7,7 @@ class Cube:
     Represents a single segment of the snake or the food.
     Handles its own movement, visual positioning, and rendering.
     """
-    def __init__(self, start, dirnx=1, dirny=0, color=(255, 0, 0)):
+    def __init__(self, start, dirnx=1, dirny=0, color=(71, 5, 34)):
         """
         Initialize a new cube segment.
         
@@ -36,41 +36,94 @@ class Cube:
         """
         self.dirnx = dirnx
         self.dirny = dirny
-        self.pos = (self.pos[0] + self.dirnx, self.pos[1] + self.dirny)
-    
-    def update_visual_position(self, interpolation):
-        """
-        Update the visual position to smoothly transition to the logical position.
+        # self.pos = (self.pos[0] + self.dirnx, self.pos[1] + self.dirny)
+        # Calculate new position with wrapping
+        new_x = self.pos[0] + self.dirnx
+        new_y = self.pos[1] + self.dirny
         
-        Args:
-            interpolation (float): Interpolation factor (0.0 to 1.0)
-        """
-        # Logical position (target)
-        target_x = self.pos[0]
-        target_y = self.pos[1]
+        # Apply wrapping if needed
+        if new_x < 0:
+            new_x = myconstants.GRID_SIZE -1
+        elif new_x >= myconstants.GRID_SIZE:
+            new_x = 0
+        
+        if new_y < 0:
+            new_y = myconstants.GRID_SIZE -1
+        elif new_y >= myconstants.GRID_SIZE:
+            new_y = 0
+        
+        self.pos = (new_x, new_y)
+    def update_visual_position(self, interpolation):
+        # """
+        # Update the visual position to smoothly transition to the logical position.
+        
+        # Args:
+        #     interpolation (float): Interpolation factor (0.0 to 1.0)
+        # """
+        # # Logical position (target)
+        # target_x = self.pos[0]
+        # target_y = self.pos[1]
+        
+        # # Calculate the differences
+        # dx = target_x - self.visual_x
+        # dy = target_y - self.visual_y
+        
+        # # Adjust for wrap-around (prevents teleporting when hitting edges)
+        # if dx > myconstants.GRID_SIZE / 2:
+        #     dx -= myconstants.GRID_SIZE
+        # elif dx < -myconstants.GRID_SIZE / 2:
+        #     dx += myconstants.GRID_SIZE
+            
+        # if dy > myconstants.GRID_SIZE / 2:
+        #     dy -= myconstants.GRID_SIZE
+        # elif dy < -myconstants.GRID_SIZE / 2:
+        #     dy += myconstants.GRID_SIZE
+
+        # # Apply interpolation for smooth movement
+        # self.visual_x += dx * interpolation
+        # self.visual_y += dy * interpolation
+        
+        # # Keep visual position within grid bounds
+        # self.visual_x %= myconstants.GRID_SIZE
+        # self.visual_y %= myconstants.GRID_SIZE
+       
+        # Get target position (logical grid position)
+        target_x = float(self.pos[0])
+        target_y = float(self.pos[1])
         
         # Calculate the differences
         dx = target_x - self.visual_x
         dy = target_y - self.visual_y
         
-        # Adjust for wrap-around (prevents teleporting when hitting edges)
+        # Handle wrapping for visual interpolation
         if dx > myconstants.GRID_SIZE / 2:
-            dx -= myconstants.GRID_SIZE
+            # We're wrapping from right to left (visual_x is near right edge, target_x is near left)
+            dx = dx - myconstants.GRID_SIZE
         elif dx < -myconstants.GRID_SIZE / 2:
-            dx += myconstants.GRID_SIZE
+            # We're wrapping from left to right (visual_x is near left edge, target_x is near right)
+            dx = dx + myconstants.GRID_SIZE
             
         if dy > myconstants.GRID_SIZE / 2:
-            dy -= myconstants.GRID_SIZE
+            # We're wrapping from bottom to top
+            dy = dy - myconstants.GRID_SIZE
         elif dy < -myconstants.GRID_SIZE / 2:
-            dy += myconstants.GRID_SIZE
-
+            # We're wrapping from top to bottom
+            dy = dy + myconstants.GRID_SIZE
+        
         # Apply interpolation for smooth movement
         self.visual_x += dx * interpolation
         self.visual_y += dy * interpolation
         
-        # Keep visual position within grid bounds
-        self.visual_x %= myconstants.GRID_SIZE
-        self.visual_y %= myconstants.GRID_SIZE
+        # Handle visual position wrapping
+        if self.visual_x < 0:
+            self.visual_x += myconstants.GRID_SIZE
+        elif self.visual_x >= myconstants.GRID_SIZE:
+            self.visual_x -= myconstants.GRID_SIZE
+            
+        if self.visual_y < 0:
+            self.visual_y += myconstants.GRID_SIZE
+        elif self.visual_y >= myconstants.GRID_SIZE:
+            self.visual_y -= myconstants.GRID_SIZE
 
     def draw(self, surface, eyes=False):
         """

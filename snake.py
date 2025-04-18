@@ -27,6 +27,8 @@ class Snake:
         self.last_move_time = 0
         self.move_delay = myconstants.SPEED_NORMAL
         self.queued_direction = None
+        self.eat_sound = pygame.mixer.Sound("Sounds/eat.mp3")
+        self.wall_hit_sound = pygame.mixer.Sound("Sounds/wall.mp3")
     
     def handle_keys(self):
         """
