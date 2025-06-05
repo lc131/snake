@@ -1,4 +1,5 @@
 ![image](https://github.com/user-attachments/assets/b03b08f7-2b12-4c59-b0d9-46d1de920eb7)
+![image](https://github.com/user-attachments/assets/59538a6d-e7ce-4aaa-ad33-02e72bcf1e6f)
 
 Snake Game
 A simple Snake game implemented in Python using Pygame. This project demonstrates smooth movement, grid-based logic with wrap-around mechanics, and basic game loop handling. The snake smoothly interpolates between grid positions and wraps around the screen edges, providing a more visually appealing experience.
